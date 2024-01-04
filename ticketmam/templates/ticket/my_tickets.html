@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="center-align">Mes Tickets</h1>
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>Demande utilisateur</th>
+                <th>Titre</th>
+                <th>Client</th>
+                <th>Demandeur</th>
+                <th>Date de debut</th>
+                <th>Etat</th>
+                <th>Agent</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr onclick="window.location='{% url 'ticket_detail_view' ticket.id %}'" style="cursor: pointer;">
+                <td>{{ ticket.typeDeRequete }}</td>
+                <td>{{ ticket.titre }}</td>
+                <td>{{ ticket.client }}</td>
+                <td>{{ ticket.demandeur }}</td>
+                <td>{{ ticket.dateDebut }}</td>
+                <td>{{ ticket.etat }}</td>
+                <td>{{ ticket.agent }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

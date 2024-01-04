@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>G4S</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quagga"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <ul id="slide-out" class="sidenav">
+    <li><br></li>
+    <li><a href="{% url 'index' %}" class="brand-logo center"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0d/Logo_de_G4S.svg/800px-Logo_de_G4S.svg.png" alt="G4S Logo" style="max-height: 50px; "></a></li>
+    <li class="center">_____________________________</li>
+    {% if user.is_authenticated %}
+    <li class="active"><a href="{% url 'profil' %}"> <i class="fa fa-user"></i> Profil</a></li>
+    <li><a href="{% url 'my_tickets' %}"> <i class="fa fa-ticket"></i> Mes Tickets <span class="label label-warning pull-right r-activity">2</span></a></li>
+    <li><a href="{% url 'activity' %}"> <i class="fa fa-calendar"></i> Activite recente <span class="label label-warning pull-right r-activity">2</span></a></li>
+    <li><a href="{% url 'my_contacts' %}"><i class="fa fa-users"></i> Mes Contacts <span class="label label-warning pull-right r-activity">5</span></a></li>
+    <li><a href="{% url 'report_list' %}"><i class="fa fa-file-text"></i>Rapports <span class="label label-icon pull-right r-activity"></span></a></li>
+    <li><a href="{% url 'stat' %}"><i class="fa fa-bar-chart"></i>Statistiques <span class="label label-icon pull-right r-activity"></span></a></li>
+      <li class="active"><a href="{% url 'logout' %}"> <i class="fa fa-sign-out"></i>Deconnexion</a></li>
+    {% else %}
+      <li class="active"><a href="{% url 'signup' %}"> <i class="fa fa-user-plus"></i>Inscription</a></li>
+      <li class="active"><a href="{% url 'login' %}"> <i class="fa fa-sign-in"></i>Connexion</a></li>
+    {% endif %}
+  </ul>
+
+  <nav style=" height: 80px">
+    <div class="nav-wrapper bg-dark">
+      <a href="{% url 'index' %}" class="brand-logo center"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0d/Logo_de_G4S.svg/800px-Logo_de_G4S.svg.png" alt="G4S Logo" style="max-height: 50px; margin: 15px"></a>
+      <a href="#" data-target="slide-out" class="sidenav-trigger"></a>
+      <a href="#" class="left" id="menu-button"><i class="fa fa-bars" style="margin: 10px;"></i> Menu</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m8 offset-m2">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer text-center">
+    <p class="mb-1">&copy; 2017–2023 G4S</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+
+      var menuButton = document.getElementById('menu-button');
+      menuButton.addEventListener('click', function() {
+        var sidenavInstance = M.Sidenav.getInstance(elems[0]);
+        sidenavInstance.open();
+      });
+    });
+  </script>
+</body>
+</html>

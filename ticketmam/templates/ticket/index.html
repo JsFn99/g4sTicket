@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+
+    <img src="https://www.g4s.com/fr-ma/-/media/g4s/morocco/images/siteg4smr/nos_employes.ashx" alt="Our Employees" class="responsive-img" style="margin-top: 20px; max-width: 100%;">
+    <div class="row">
+    </div>
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="d-flex flex-row rounded shadow" style="width: 576px">
+                <div class="p-0 w-25">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="circle responsive-img" style="height: 70px; width: 70px; margin: 20px;">
+                </div>
+                <div class="pl-3 pt-2 pr-2 pb-2 w-75 border-left">
+                    <ul class="m-0 float-left" style="list-style: none; margin:0; padding: 0">
+                        <li><i></i> <h4 class="text-primary">{{ user.username }} {{ user.first_name }} {{ user.last_name }}</h4></li>
+                        <li><i></i> <h5 class="text-info">{{ user.agent.departement }}</h5></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card green lighten-2 rounded shadow">
+                <div class="card-content white-text">
+                    <i class="material-icons">check_circle</i>
+                    <span class="card-title">{{ user_agent.nbrTicketsResolus }} Résolus</span>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <a href="{% url 'my_tickets' %}">
+                <div class="card orange lighten-2 rounded shadow">
+                    <div class="card-content white-text">
+                        <i class="material-icons">assignment_turned_in</i>
+                        <span class="card-title">{{ user_agent.nbrTickets }} Assignés</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card red lighten-2 rounded shadow">
+                <div class="card-content white-text">
+                    <i class="material-icons">access_time</i>
+                    <span class="card-title">{{ current_tickets_count }} En Cours</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m6">
+            <div class="card blue lighten-2 rounded shadow">
+                <div class="card-content white-text">
+                    <i class="material-icons">location_on</i>
+                    <span class="card-title">{{ cities_count }} Villes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

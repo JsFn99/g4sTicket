@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Rapports</h1>
+    <ul>
+        {% for report in reports %}
+            <li><a href="{% url 'report_detail' report.id %}">{{ report.titre }}</a></li>
+        {% empty %}
+            <li>Aucun rapport pour l'instant.</li>
+        {% endfor %}
+    </ul>
+     <a href="{% url 'report' %}" class="btn waves-effect waves-light">Rediger un rapport</a>
+{% endblock %}

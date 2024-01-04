@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Votre planning</h1>
+    <br>
+    <div id="calendar"></div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var userDates = JSON.parse('{{ user_tickets_dates|safe }}'); 
+        $('#calendar').fullCalendar({
+            locale: 'fr', 
+            buttonText: {
+                month: "Mois",
+                week: "Semaine",
+                day: "Jour",
+                today: "Aujourd'hui",
+            },
+            defaultView: 'month', 
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            nowIndicator: true,
+            editable: true,
+            selectable: true,
+            selectHelper: true,
+            events: userDates, 
+        });
+    });
+</script>
+{% endblock %}

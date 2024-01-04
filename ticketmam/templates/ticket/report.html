@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<a href="{% url 'report_list' %}" class="waves-effect waves-light btn grey lighten-3">
+        <i class="material-icons left black-text">arrow_back</i>
+    </a>
+    <br><br>
+    <h1>Votre Rapport</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="ticket">Selectionner le Ticket:</label>
+        <select name="ticket" required>
+            <option value="" disabled selected>Select a ticket</option>
+            {% for ticket in tickets %}
+                <option value="{{ ticket.id }}">{{ ticket.titre }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="titre">Titre:</label>
+        <input type="text" name="titre" required>
+        <br>
+        <label for="description">Description:</label>
+        <textarea name="description" required></textarea>
+        <br>
+        <button type="submit">Creer Rapport</button>
+    </form>
+{% endblock %}

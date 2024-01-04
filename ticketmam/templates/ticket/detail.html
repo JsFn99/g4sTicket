@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h1>Détails du Ticket</h1>
+    <br>
+    <div class="row">
+        <div class="col s4">
+            <h5 class="section-title">Informations Générales</h5>
+            <hr class="section-line">
+            <p><strong>Client:</strong> {{ ticket.client }}</p>
+            <p><strong>Demandeur:</strong> {{ ticket.demandeur }}</p>
+            {% if ticket.etat == 'Nouveau' %}
+                <p><strong>État:</strong> <span class="blue">{{ ticket.etat }}</span></p>
+            {% else %}
+                <p><strong>État:</strong> {{ ticket.etat }}</p>
+            {% endif %}
+            <p><strong>Origine:</strong> {{ ticket.origine }}</p>
+            <p><strong>Titre:</strong> {{ ticket.titre }}</p>
+            <p><strong>Description:</strong> {{ ticket.description }}</p>
+        </div>
+        <div class="col s4">
+            <h5 class="section-title">Qualification</h5>
+            <hr class="section-line">
+            <p><strong>Type de Requête:</strong> {{ ticket.typeDeRequete }}</p>
+            <p><strong>Impact:</strong> {{ ticket.impact }}</p>
+            <p><strong>Urgence:</strong> {{ ticket.urgence }}</p>
+            {% if ticket.priorite == 'Haute' %}
+                <p><strong>Priorité:</strong> <span class="red">{{ ticket.priorite }}</span></p>
+            {% else %}
+                <p><strong>Priorité:</strong> {{ ticket.priorite }}</p>
+            {% endif %}
+        </div>
+        <div class="col s4">
+            <h5 class="section-title">Relations</h5>
+            <hr class="section-line">
+            <p><strong>Requête parente:</strong> {{ ticket.requeteParente }}</p>
+            <p><strong>Changement parent:</strong> {{ ticket.changementParent }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s4">
+            <h5 class="section-title">Informations Complémentaires</h5>
+            <hr class="section-line">
+            <p><strong>Service:</strong> {{ ticket.service }}</p>
+            <p><strong>Sous catégorie de service:</strong> {{ ticket.sousCategorieService }}</p>
+        </div>
+        <div class="col s4">
+            <h5 class="section-title">Dates</h5>
+            <hr class="section-line">
+            <p><strong>Date de début:</strong> {{ ticket.dateDebut }}</p>
+            <p><strong>Dernière mise à jour:</strong> {{ ticket.derniereMiseAJour }}</p>
+            <p><strong>Échéance TTO:</strong> {{ ticket.echeanceTTR }}</p>
+        </div>
+        <div class="col s4">
+            <h5 class="section-title">QR Code Scanner</h5>
+            <hr class="section-line">
+            <video id="qr-scanner"></video>
+            <p id="qr-result"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            {% if ticket.etat != 'Termine' %}
+            <form id="terminate-form" method="post" action="{% url 'terminate_ticket' ticket.id %}">
+                {% csrf_token %}
+                <button type="button" class="btn waves-effect waves-light red" onclick="showConfirmationDialog()">Terminer</button>
+            </form>
+            <div id="confirmation-dialog" class="modal">
+                <div class="modal-content">
+                    <h4>Confirmation</h4>
+                    <p>Voulez-vous vraiment terminer ce ticket ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
+                    <button type="button" class="btn waves-effect waves-light red" onclick="terminateTicket()">Confirmer</button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <a href="{% url 'my_tickets' %}" class="btn waves-effect waves-light">Retour à la liste des tickets</a>
+</div>
+
+<style>
+    .section-title {
+        margin-bottom: 0.5em;
+    }
+
+    .section-line {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin-bottom: 1em;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/instascan@1.0.0/instascan.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const scanner = new Instascan.Scanner({ video: document.getElementById('qr-scanner') });
+        scanner.addListener('scan', function(content) {
+            if (content === '{{ Ticket.site.qr_code }}') {
+                document.getElementById('qr-result').textContent = 'QR Code Match: Success!';
+            } else {
+                document.getElementById('qr-result').textContent = 'QR Code Match: Failed!';
+            }
+        });
+        Instascan.Camera.getCameras().then(function(cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function(e) {
+            console.error(e);
+        });
+    });
+
+    function showConfirmationDialog() {
+        const modal = document.querySelector('#confirmation-dialog');
+        const instance = M.Modal.init(modal, { dismissible: false });
+        instance.open();
+    }
+
+    function terminateTicket() {
+        document.querySelector('#terminate-form').submit();
+    }
+</script>
+{% endblock %}

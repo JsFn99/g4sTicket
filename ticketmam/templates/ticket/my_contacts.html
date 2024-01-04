@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block content %}
+<div class="container">
+    <h1>Liste des Contacts</h1>
+    <ul class="collection">
+        {% for client in clients %}
+            <a href="{% url 'detail_contact' client.id %}" class="collection-item">
+                {{ client.nom }}
+            </a>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

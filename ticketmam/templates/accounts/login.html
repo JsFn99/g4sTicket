@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container" style="max-width: 400px; margin-left: -10px; margin-right: auto;">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12">
+            <form method="POST" action="{% url 'login' %}" class="p-5 border rounded shadow">
+                {% csrf_token %}
+                <h4 class="text-center">Connectez-vous</h4>
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input required="" type="text" class="form-control" id="username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input required="" type="password" class="form-control" id="password" name="password">
+                    <small class="form-text"><a href="#">Mot de passe oublié ?</a></small>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Connexion</button>
+                </div>
+                <div class="text-center mt-3">
+                    <p class="signup">Vous n'avez pas de compte ? <a href="{% url 'signup' %}">Inscrivez-vous</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="container">
+    <h2> Vos Stats</h2>
+    
+    <!-- Graph for Assigned Tickets -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card rounded shadow">
+                <div class="card-header">
+                    Tickets Assignes 
+                </div>
+                <div class="card-body">
+                    {{ assigned_tickets_graph|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Graph for Solved Tickets -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card rounded shadow">
+                <div class="card-header">
+                    Tickets resolues 
+                </div>
+                <div class="card-body">
+                    {{ solved_tickets_graph|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

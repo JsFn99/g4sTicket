@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+<div class="container">
+    <br>
+    <a href="{% url 'my_contacts' %}" class="waves-effect waves-light btn grey lighten-3">
+        <i class="material-icons left black-text">arrow_back</i>
+    </a>
+    <h1><br></h1>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ client.nom }}</span>
+            <p><strong>Adresse:</strong> {{ client.adresse }}</p>
+            <p><strong>Ville:</strong> {{ client.ville }}, {{ client.pays }}</p>
+            <p><strong>Téléphone:</strong> {{ client.telephone }}</p>
+            <p><strong>Email:</strong> {{ client.email }}</p>
+        </div>
+        <div class="card-action">
+            <a href="tel:{{ client.telephone }}" class="waves-effect waves-light btn">
+                <i class="material-icons left">phone</i>Appeler
+            </a>
+            <a href="mailto:{{ client.email }}" class="waves-effect waves-light btn">
+                <i class="material-icons left">email</i>Envoyer un Email
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

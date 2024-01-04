@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+</br>
+<div class="container emp-profile">
+  <div class="row">
+    <div class="col s12 m4">
+      <div class="profile-img">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="responsive-img" width="150">
+      </div>
+    </div>
+    <div class="col s12 m8">
+      <div class="profile-head">
+        <h5>{{ agent.username }}</h5>
+        <h6>Technicien matériel</h6>
+        <p class="proile-rating">Note: <span>8/10</span></p>
+        <ul class="tabs" id="myTab">
+          <li class="tab col s6"><a class="active" href="#home">Vous</a></li>
+          <li class="tab col s6"><a href="#profile">Groupes</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m4">
+      <div class="profile-work">
+        <p>INFOS</p>
+        <a href="">Département : </a><h9>{{ agent.departement }}</h9><br/>
+        <a href="">Tickets résolus : </a><h9>{{ agent.nbrTicketsResolus }}</h9><br/>
+        <a href="{% url 'my_tickets' %}">Tickets Assignés : </a><h9>{{ agent.nbrTickets }}</h9>
+        </br></br>
+      </div>
+    </div>
+    <div class="col s12 m8">
+      <div class="tab-content profile-tab" id="myTabContent">
+        <div id="home" class="col s12">
+          <div class="row">
+            <div class="col s6 m6">
+              <label>ID</label>
+            </div>
+            <div class="col s6 m6">
+              <p>{{ agent.id_agent }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s6 m6">
+              <label>Nom</label>
+            </div>
+            <div class="col s6 m6">
+              <p>{{ agent.first_name }} {{ agent.last_name }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s6 m6">
+              <label>Email</label>
+            </div>
+            <div class="col s6 m6">
+              <p>{{ agent.email }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s6 m6">
+              <label>Téléphone</label>
+            </div>
+            <div class="col s6 m6">
+              <p>{{ agent.telephone }}</p>
+            </div>
+          </div>
+        </div>
+        <div id="profile" class="col s12" style="display: none;">
+          <h6>Groupes:</h6>
+          <ul>
+            {% for group in agent.groups.all %}
+              <li>{{ group.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var tabs = document.querySelectorAll('.tabs');
+      var tabInstances = M.Tabs.init(tabs, {});
+    });
+  </script>
+{% endblock %}
